@@ -1,0 +1,5 @@
+#assignment2's role is to contain the values of 6,18,14,22,27,17,22,20,22. 
+assignment2 <- c(6,18,14,22,27,17,22,20,22)
+#myMean's is to find the mean(average) of assigment2. MyMean is able to do this dividing the sum of the numbers by the number of values
+myMean <- function(assignment2) {return(sum(assignment2)/length(assignment2))}
+#the result of myMean is 18.67
