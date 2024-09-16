@@ -1,0 +1,33 @@
+#Question 1
+#set1
+"set1" <-c(10, 2, 3, 2, 4, 2, 5)
+
+mean(set1)
+
+median(set1)
+#mode= 2
+
+#set2
+"set2" <-c(20, 12, 13, 12, 14, 12, 15)
+mean(set2)
+median(set2)
+#mode= 12
+
+#Question 2
+
+#Set1
+range(set1)
+sd(set1)
+quantile(set1)
+var(set1)
+#interquartile= 2.5
+
+#Set2
+range(set2)
+sd(set2)
+quantile(set2)
+var(set2)
+#interquartile=2.5
+
+#Set2 has a greater max, min, mean, and median than set1
+#Both sets have the same interquartile, range, variance, and standard deviation
