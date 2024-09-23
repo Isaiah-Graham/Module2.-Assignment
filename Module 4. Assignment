@@ -1,0 +1,30 @@
+#A. Based on table, what is the probability of Event A? Event B? Event A or B?
+#Values
+A <- 30
+B <- 30
+total <- 90
+  
+#A1.Event A
+EventA <- (A/total)
+EventA
+  
+#A2.Event B?
+EventB <- (B/total)
+EventB
+  
+#A3.Event A or B
+AorB <- EventA + EventB - (EventA * EventB)
+AorB
+  
+#A4. P(A or B) = P(A) + P(B)
+PAorB <- EventA + EventB
+PAorB
+  
+#B. What is the probability that it will rain on the day of Jane's wedding?
+#B1. The answer is true
+#B2.The chances of rain is still low due to it only being 11.1 percent even when he predicts there will be rain.
+  
+#C.What is the probability of operating on 10 patients successfully with the tradtional method?
+#C1.
+Answer<-dbinom(10,10,.8)*100
+Answer
