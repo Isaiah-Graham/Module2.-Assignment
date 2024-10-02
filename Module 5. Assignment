@@ -1,0 +1,75 @@
+#install.packages("corrgram")
+library(corrgram)
+# Question 1
+#A. 
+#The null hypothesis is that the mean breaking strength is at least 70 
+#The Alt hypothesis is that the mean breaking strength is below 70
+
+#B.
+#Is there evidence that the machine is not meeting the manufacturer’s specifications for average strength? Use a 0.05 level of significance
+
+A<- 70
+s<-3.5
+N<-49
+xbar <-69.1
+z<- (xbar-A)/(s/sqrt(N)) 
+z > 2*pnorm(-abs(z))
+alpha = .05
+z.half.alpha = qnorm(1-alpha/2)
+c(-z.half.alpha, z.half.alpha)
+xxx = 2 * pnorm(z) # lower tail 
+xxx # two−tailed p−value 
+# The machine is meeting the specifications based on the null hypothesis being correct.
+
+#C.
+#Compute the p value and interpret its meaning _______
+xxx = 2 * pnorm(z) # lower tail 
+xxx # two−tailed p−value
+# The p value is greater than .05 meaning that we do not reject the null hypothesis
+
+#D.
+#What would be your answer in (B) if the standard deviation were specified as 1.75 pounds?______
+A<- 70
+s<-1.75
+N<-49
+xbar <-69.1
+z<- (xbar-A)/(s/sqrt(N)) 
+z > 2*pnorm(-abs(z))
+alpha = .05
+z.half.alpha = qnorm(1-alpha/2)
+c(-z.half.alpha, z.half.alpha)
+xxx = 2 * pnorm(z) # lower tail 
+xxx # two−tailed p−value 
+#We should reject the null hypothesis as the p value is below .05
+#E.
+#What would be your answer in (B) if the sample mean were 69 pounds and the standard deviation is 3.5 pounds? ______
+A<- 70
+s<-3.5
+N<-49
+xbar <-69
+z<- (xbar-A)/(s/sqrt(N)) 
+z > 2*pnorm(-abs(z))
+alpha = .05
+z.half.alpha = qnorm(1-alpha/2)
+c(-z.half.alpha, z.half.alpha)
+xxx = 2 * pnorm(z) # lower tail 
+xxx # two−tailed p−value 
+#We do not rejct the null hypothesis as the p value is equal to .05
+#Question 2
+#If x̅ = 85, σ = standard deviation = 8, and n=64, set up 95% confidence interval estimate of the population mean μ.
+ConfidenceIntervalUpper <- 85 + (1.96*(8/sqrt(64)))
+ConfidenceIntervalLower <- 85 - (1.96*(8/sqrt(64)))
+ConfidenceIntervalLower
+ConfidenceIntervalUpper
+#Question 3
+#a. Calculate the correlation coefficient for this data set _____
+x<-c(92,108,135)
+y<-c(95.9,113,141) 
+df<- data.frame(x,y)
+cor(x,y)
+#b. Pearson correlation coefficient _____
+cor(df,method="pearson") #As pearson correlation
+cor(df, method="spearman") #As spearman correlation
+#c. Create plot of the correlation
+corrgram(cor(df,method="pearson"))
+corrgram(cor(df,method="spearman"))
