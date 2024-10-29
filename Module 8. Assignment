@@ -1,0 +1,85 @@
+#Question 1
+> 
+> #Variables
+> High_Stress<- c(10,9,8,9,10,8)
+> Mod_Stress<- c(8,10,6,7,8,8)
+> Low_Stress<- c(4,6,6,4,2,2)
+> 
+> #Frame
+> Data <- data.frame(
++   stress_level = factor(rep(c("High", "Moderate", "Low"), each = 6)),
++   Score = c(High_Stress, Mod_Stress, Low_Stress)
++ )
+> 
+> # Results
+> Result <- aov(Score ~ stress_level, data = Data)
+> summary(Result)
+             Df Sum Sq Mean Sq F value   Pr(>F)    
+stress_level  2  82.11   41.06   21.36 4.08e-05 ***
+Residuals    15  28.83    1.92                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+> 
+> #Question 2
+> #install.packages("ISwR")
+> #library(ISwR)
+> data(zelazo)
+> #2.1. Convert the data to a form suitable for the user of lm, and calculate the relevant test. Consider t tests comparing selected subgroups or obtained by combing groups.    
+> #Simplifying
+> active <- zelazo$active
+> 
+> passive <- zelazo$passive
+> 
+> none <- zelazo$none
+> 
+> ctr.8w <- zelazo$ctr.8w
+> 
+> #This will fix the length issue as Control has 1 less data point
+> max_length <- max(length(active), length(passive), length(none), length(ctr.8w))
+> #Data Frame of Zelazo
+> zelazo_df <- data.frame(
++     
++ active = c(active, rep(NA, max_length - length(active))),
++     
++ passive = c(passive, rep(NA, max_length - length(passive))),
++     
++ none = c(none, rep(NA, max_length - length(none))),
++     
++ ctr.8w = c(ctr.8w, rep(NA, max_length - length(ctr.8w)))
++     
++     )
+> zelazo_df
+  active passive  none ctr.8w
+1   9.00   11.00 11.50  13.25
+2   9.50   10.00 12.00  11.50
+3   9.75   10.00  9.00  12.00
+4  10.00   11.75 11.50  13.50
+5  13.00   10.50 13.25  11.50
+6   9.50   15.00 13.00     NA
+> 
+> #Relevant t-test
+> t.test(zelazo_df$active, zelazo_df$ctr.8w)
+
+	Welch Two Sample t-test
+
+data:  zelazo_df$active and zelazo_df$ctr.8w
+t = -3.0449, df = 8.6632, p-value = 0.01453
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -3.8878619 -0.5621381
+sample estimates:
+mean of x mean of y 
+   10.125    12.350 
+
+> #The reason behind these categories being chosen is due to the the active and control groups being the most relevant as this will test the hypothesis as it is usually the active group and control group which will help answer the hypothesis
+> 
+> #2.2. Consider ANOVA test (one way or two-way) to this dataset (zelazo)
+> #ANOVA test
+> zelazo_anova <- aov(active ~ passive + none +ctr.8w, data = zelazo_df)
+> summary(zelazo_anova)
+            Df Sum Sq Mean Sq F value Pr(>F)
+passive      1  0.044   0.044   0.019  0.913
+none         1  3.758   3.758   1.614  0.425
+ctr.8w       1  3.870   3.870   1.662  0.420
+Residuals    1  2.329   2.329               
+1 observation deleted due to missingness
