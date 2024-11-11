@@ -1,0 +1,236 @@
+> #Question 10.1
+> #Set up an additive model for the ashina data, as part of ISwR package
+> #library(ISwR)
+> ashina
+   vas.active vas.plac grp subject
+1        -167     -102   1       1
+2        -127      -39   1       2
+3         -58       32   1       3
+4        -103       28   1       4
+5         -35       16   1       5
+6        -164      -42   1       6
+7          -3      -27   1       7
+8          25      -30   1       8
+9         -61      -47   1       9
+10        -45        8   1      10
+11        -38       12   2      11
+12         29       11   2      12
+13          2       -9   2      13
+14        -18       -1   2      14
+15        -74        3   2      15
+16        -72      -36   2      16
+> head(ashina)
+  vas.active vas.plac grp subject
+1       -167     -102   1       1
+2       -127      -39   1       2
+3        -58       32   1       3
+4       -103       28   1       4
+5        -35       16   1       5
+6       -164      -42   1       6
+> 
+> ashina$subject <- factor(1:16)
+> attach(ashina)
+The following object is masked from ashinaModel (pos = 3):
+
+    subject
+
+The following objects are masked from ashina (pos = 4):
+
+    grp, subject, vas.active, vas.plac
+
+The following object is masked from ashinaModel (pos = 5):
+
+    subject
+
+The following objects are masked from ashina (pos = 6):
+
+    grp, subject, vas.active, vas.plac
+
+The following object is masked from ashinaModel (pos = 7):
+
+    subject
+
+The following objects are masked from ashina (pos = 8):
+
+    grp, subject, vas.active, vas.plac
+
+The following object is masked from ashinaModel (pos = 9):
+
+    subject
+
+The following objects are masked from ashina (pos = 10):
+
+    grp, subject, vas.active, vas.plac
+
+> act <- data.frame(vas=vas.active,subject,treat=1,period=grp)
+> plac <-data.frame(vas=vas.plac,subject,treat=0,period=grp)                      
+> 
+> ashinaModel <- rbind(act, plac)
+> attach(ashinaModel)
+The following object is masked from ashina (pos = 3):
+
+    subject
+
+The following objects are masked from ashinaModel (pos = 4):
+
+    period, subject, treat, vas
+
+The following object is masked from ashina (pos = 5):
+
+    subject
+
+The following objects are masked from ashinaModel (pos = 6):
+
+    period, subject, treat, vas
+
+The following object is masked from ashina (pos = 7):
+
+    subject
+
+The following objects are masked from ashinaModel (pos = 8):
+
+    period, subject, treat, vas
+
+The following object is masked from ashina (pos = 9):
+
+    subject
+
+The following objects are masked from ashinaModel (pos = 10):
+
+    period, subject, treat, vas
+
+The following object is masked from ashina (pos = 11):
+
+    subject
+
+> 
+> ashina_lm <- lm(vas ~ subject + period + treat,data = ashinaModel)
+> ashina_lm
+
+Call:
+lm(formula = vas ~ subject + period + treat, data = ashinaModel)
+
+Coefficients:
+(Intercept)     subject2     subject3     subject4     subject5     subject6     subject7     subject8     subject9  
+    -113.06        51.50       121.50        97.00       125.00        31.50       119.50       132.00        80.50  
+  subject10    subject11    subject12    subject13    subject14    subject15    subject16       period        treat  
+     116.00       121.50       154.50       131.00       125.00        99.00        80.50           NA       -42.87  
+
+> 
+> t.test(treat,vas,data = ashina_lm)
+
+	Welch Two Sample t-test
+
+data:  treat and vas
+t = 3.83, df = 31.006, p-value = 0.0005844
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 16.77138 54.97862
+sample estimates:
+mean of x mean of y 
+    0.500   -35.375 
+
+> 
+> t.test(treat,period,data = ashina_lm)
+
+	Welch Two Sample t-test
+
+data:  treat and period
+t = -7, df = 61.936, p-value = 2.16e-09
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.1248766 -0.6251234
+sample estimates:
+mean of x mean of y 
+    0.500     1.375 
+
+> 
+
+#Question 10.3
+#Your assignment is to generate the model matrices for models
+> a <- gl(2, 2, 8)
+> b <- gl(2, 4, 8)
+> x <-- 1:8
+> y <- c(1:4, 8:5)
+> z <- rnorm (8)
+> 
+> model.matrix(~ a:b);lm(z ~ a:b)
+  (Intercept) a1:b1 a2:b1 a1:b2 a2:b2
+1           1     1     0     0     0
+2           1     1     0     0     0
+3           1     0     1     0     0
+4           1     0     1     0     0
+5           1     0     0     1     0
+6           1     0     0     1     0
+7           1     0     0     0     1
+8           1     0     0     0     1
+attr(,"assign")
+[1] 0 1 1 1 1
+attr(,"contrasts")
+attr(,"contrasts")$a
+[1] "contr.treatment"
+
+attr(,"contrasts")$b
+[1] "contr.treatment"
+
+
+Call:
+lm(formula = z ~ a:b)
+
+Coefficients:
+(Intercept)        a1:b1        a2:b1        a1:b2        a2:b2  
+     0.1837      -0.4289      -0.6307      -0.7312           NA  
+
+> 
+> model.matrix(~ a:y);lm(z ~ a:y)
+  (Intercept) a1:y a2:y
+1           1    1    0
+2           1    2    0
+3           1    0    3
+4           1    0    4
+5           1    8    0
+6           1    7    0
+7           1    0    6
+8           1    0    5
+attr(,"assign")
+[1] 0 1 1
+attr(,"contrasts")
+attr(,"contrasts")$a
+[1] "contr.treatment"
+
+
+Call:
+lm(formula = z ~ a:y)
+
+Coefficients:
+(Intercept)         a1:y         a2:y  
+  -0.492319     0.005829     0.095629  
+
+> 
+> model.matrix(~ a*b);lm(z~a*b)
+  (Intercept) a2 b2 a2:b2
+1           1  0  0     0
+2           1  0  0     0
+3           1  1  0     0
+4           1  1  0     0
+5           1  0  1     0
+6           1  0  1     0
+7           1  1  1     1
+8           1  1  1     1
+attr(,"assign")
+[1] 0 1 2 3
+attr(,"contrasts")
+attr(,"contrasts")$a
+[1] "contr.treatment"
+
+attr(,"contrasts")$b
+[1] "contr.treatment"
+
+
+Call:
+lm(formula = z ~ a * b)
+
+Coefficients:
+(Intercept)           a2           b2        a2:b2  
+    -0.2453      -0.2018      -0.3023       0.9330 
+#Based on the data above there wasn't an indication of an singularity between models.
