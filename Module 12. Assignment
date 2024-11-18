@@ -1,0 +1,43 @@
+> #Question 1
+> 
+> #a.Construct a time series plot using R.
+> student_card_ts<-ts(c(
++ 31.9, 27, 31.3, 31, 39.4, 40.7, 42.3, 49.5, 45, 50, 50.9, 58.5,
++                                 
++ 39.4, 36.2, 40.5, 44.6, 46.8, 44.7, 52.2, 54, 48.8, 55.8, 58.7, 63.4),
++                               
++ frequency = 12)
+> 
+> #Plotting student card charges time series
+> plot(student_card_ts, 
++      
++ main = "Credit Card Time Series",
++      
++ ylab = "Charges")
+> 
+> #b.Employ Exponential Smoothing Model as outline in Avril Voghlan's notes and report the statistical  outcome
+> exponential_smoothing<-HoltWinters(student_card_ts, beta = FALSE, gamma = FALSE)
+> 
+> exponential_smoothing
+Holt-Winters exponential smoothing without trend and without seasonal component.
+
+Call:
+HoltWinters(x = student_card_ts, beta = FALSE, gamma = FALSE)
+
+Smoothing parameters:
+ alpha: 0.8232442
+ beta : FALSE
+ gamma: FALSE
+
+Coefficients:
+      [,1]
+a 62.44453
+> 
+> #Plotting the exponential smoothing
+> plot(exponential_smoothing)
+> 
+> #c. Provide a discussion on time series and Exponential Smoothing Model result you led to. 
+> #Time series takes in account data taken over time that may have patterns.These patterns such as cyclical patterns, erratic fluctuations, and overall trends are all things that are important factors which influence the data
+> #Exponential smoothing is used for short-term forecasting and it uses the weighted average of past data points to predict future values.
+> # The exponential smoothing graph shows that there is a pattern that is impacting the data. 
+> 
